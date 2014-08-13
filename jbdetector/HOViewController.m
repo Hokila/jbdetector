@@ -45,15 +45,15 @@
     int (*func_stat)(const char *, struct stat *) = stat;
     if ((ret = dladdr(func_stat, &dylib_info))) {
         NSLog(@"lib :%s", dylib_info.dli_fname);
-        char* kernal = "/usr/lib/system/libsystem_kernel.dylib";
-        
+        char* kernal = "/usr/lib/system/libsystem_kernel.dylib";//real device
+        //usr/lib/system/libsystem_sim_kernel.dylib  //simulator
         if (strcmp(dylib_info.dli_fname,kernal)!=0) {
             return YES;
         }
     }
-    
-    
-    //checkDylibs
+
+
+    //checkDylibs is contain MobileSubstrate
     uint32_t count = _dyld_image_count();
     for (uint32_t i = 0 ; i < count; ++i) {
         char* substrate = "Library/MobileSubstrate/MobileSubstrate.dylib";
@@ -69,6 +69,7 @@
         return YES;
     }
 #endif
+
     return NO;
 }
 
